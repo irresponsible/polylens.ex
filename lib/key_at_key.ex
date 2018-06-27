@@ -20,7 +20,7 @@ defimpl_ex MapKeyAtKey, {%KeyAtKey{},map} when is_map(map), for: Lens do
       ^fail -> {:error, :not_found}
       val ->
 	ret = Map.delete(map, key)
-	|> Map.assoc(new_key, val)
+	|> Map.put(new_key, val)
 	{:ok, ret}
     end
   end

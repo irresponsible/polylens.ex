@@ -15,7 +15,7 @@ defimpl_ex ListValueAtIndex, {%ValueAtIndex{},list} when is_list(list), for: Len
     end
   end
   def set({%{index: index}, list}, value),
-    do: List.replace_at(list, index, value)
+    do: {:ok, List.replace_at(list, index, value)}
 end
 
 defimpl_ex TupleValueAtIndex, {%ValueAtIndex{},tuple} when is_tuple(tuple), for: Lens do

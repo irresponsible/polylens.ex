@@ -21,7 +21,9 @@ def example do
 
   # Firstly, we can get the values they lens over
   for number <- number do
-    IO.inspect(Polylens.get_in(number, sample))
+    Polylens.get_in(number, sample)
+    |> IO.inspect()
+  end
 
   # We can set them all to the same thing. Result: {42, %{42 => [42, 42]}}
   Enum.reduce(numbers, sample, fn lens, data ->

@@ -1,12 +1,12 @@
-defmodule Polylens.KeyAtKey do
+defmodule Polylens.KeyAt do
   @enforce_keys [:key]
   defstruct @enforce_keys
 end
 
 import ProtocolEx
-alias Polylens.{Lens, KeyAtKey}
+alias Polylens.Lens
 
-defimpl_ex MapKeyAtKey, {%KeyAtKey{},map} when is_map(map), for: Lens do
+defimpl_ex MapKeyAt, {%Polylens.KeyAt{},map} when is_map(map), for: Lens do
   def get({%{key: key}, map}) do
     fail = make_ref()
     case Map.get(map, key, fail) do
@@ -26,7 +26,7 @@ defimpl_ex MapKeyAtKey, {%KeyAtKey{},map} when is_map(map), for: Lens do
   end
 end
 
-defimpl_ex ListKeyAtKey, {%KeyAtKey{},list} when is_list(list), for: Lens do
+defimpl_ex ListKeyAt, {%Polylens.KeyAt{},list} when is_list(list), for: Lens do
   def get({%{key: key}, list}) do
     fail = make_ref()
     case :proplists.get_value(key, list, fail) do

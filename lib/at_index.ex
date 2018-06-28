@@ -1,12 +1,12 @@
-defmodule Polylens.ValueAtIndex do
+defmodule Polylens.AtIndex do
   @enforce_keys [:index]
   defstruct @enforce_keys
 end
 
 import ProtocolEx
-alias Polylens.{Lens, ValueAtIndex}
+alias Polylens.Lens
 
-defimpl_ex ListValueAtIndex, {%ValueAtIndex{},list} when is_list(list), for: Lens do
+defimpl_ex ListAtIndex, {%Polylens.AtIndex{},list} when is_list(list), for: Lens do
   def get({%{index: index}, list}) do
     fail = make_ref()
     case Enum.at(list, index, fail) do
@@ -18,7 +18,7 @@ defimpl_ex ListValueAtIndex, {%ValueAtIndex{},list} when is_list(list), for: Len
     do: {:ok, List.replace_at(list, index, value)}
 end
 
-defimpl_ex TupleValueAtIndex, {%ValueAtIndex{},tuple} when is_tuple(tuple), for: Lens do
+defimpl_ex TupleAtIndex, {%Polylens.AtIndex{},tuple} when is_tuple(tuple), for: Lens do
   def get({%{index: index}, tuple}) do
     if tuple_size(tuple) > index,
       do: {:ok, elem(tuple, index)},

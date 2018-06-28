@@ -57,7 +57,7 @@ defmodule Polylens do
       {:error, reason} -> {:error, {reason, path}}
     end
   end
-  defp set_in_h_out([], value), do: value
+  defp set_in_h_out([], value), do: {:ok, value}
   defp set_in_h_out([ {lens, data} | path ], value) do
     case set(lens, data, value) do
       {:ok, val} -> set_in_h_out(path, val)

@@ -20,7 +20,7 @@ def numbers, do: [one, two, three, four]
 def example do
 
   # Firstly, we can get the values they lens over
-  for number <- number do
+  for number <- numbers do
     Polylens.get_in(number, sample)
     |> IO.inspect()
   end

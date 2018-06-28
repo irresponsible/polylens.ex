@@ -26,7 +26,7 @@ defimpl_ex TupleAtIndex, {%Polylens.AtIndex{},tuple} when is_tuple(tuple), for: 
   end
   def set({%{index: index}, tuple}, value) do
     if tuple_size(tuple) > index,
-      do: {:ok, Tuple.insert_at(tuple, index, value)},
+      do: {:ok, put_elem(tuple, index, value)},
       else: {:error, :not_found}
   end
 end

@@ -15,7 +15,7 @@ def two,   do: [Lenses.at_index(1), Lenses.key_at(2)]
 def three, do: [Lenses.at_index(1), Lenses.at_key(2), Lenses.at_index(0)]
 def four,  do: [Lenses.at_index(1), Lenses.at_key(2), Lenses.at_index(1)]
 
-def numbers, do: [one, two, three, four]
+def numbers, do: [four, three, two, one]
 
 def example do
 

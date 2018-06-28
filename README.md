@@ -21,19 +21,21 @@ def example do
 
   # Firstly, we can get the values they lens over
   for number <- numbers do
-    Polylens.get_in(number, sample)
-    |> IO.inspect()
+    {:ok, num} = Polylens.get_in(number, sample)
+    IO.inspect(num)
   end
 
   # We can set them all to the same thing. Result: {42, %{42 => [42, 42]}}
   Enum.reduce(numbers, sample, fn lens, data ->
-    Polylens.set_in(lens, data, 42)
+    {:ok, ret} = Polylens.set_in(lens, data, 42)
+    ret
   end
   |> IO.inspect()
 
   # We can modify them all. Result: {2, %{3 => [4, 5]}}
   Enum.reduce(numbers, sample, fn lens, data ->
-    Polylens.update_in(lens, data, fn x -> x + 1 end)
+    {:ok, ret} = Polylens.update_in(lens, data, fn x -> x + 1 end)
+    ret
   end
   |> IO.inspect()
 

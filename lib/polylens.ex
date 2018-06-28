@@ -39,12 +39,16 @@ defmodule Polylens do
 
   @doc "Like get, but takes a list of lenses to get nested data"
   def get_in(lenses, data) do
-    Enum.reduce_while(lenses, data, fn lens, data ->
+    ret = Enum.reduce_while(lenses, data, fn lens, data ->
       case get(lens, data) do
 	{:ok, data} -> {:cont, data}
 	r -> {:halt, r}
       end
     end)
+    case ret do
+      err = {:error, _} -> err
+      other -> {:ok, other}
+    end
   end
 
   @doc "Like set, but takes a list of lenses to set nested data"

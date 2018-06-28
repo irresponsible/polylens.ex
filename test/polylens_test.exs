@@ -18,12 +18,15 @@ defmodule PolylensTest do
   @four_update  [Lenses.at_index(1), Lenses.at_key(3), Lenses.at_index(1)]
   @numbers_update [@one, @two, @three_update, @four_update]
 
-  @getting_out [1,2,3,4]
+  @getting_out [1, 2, 3, 4]
   @setting_out {42, %{42 => [42, 42]}}
   @updating_out {2, %{3 => [4, 5]}}
 
   test "getting" do
-    assert @getting_out === Enum.map(@numbers_get, &Polylens.get_in(&1, @sample))
+    assert @getting_out === Enum.map(@numbers_get, fn number ->
+      {:ok, ret} = Polylens.get_in(number, @sample)
+      ret
+    end)
   end
   test "setting" do
     assert @setting_out ===

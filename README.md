@@ -10,10 +10,10 @@ alias Polylens.Lenses
 def sample, do: {1, %{2 => [3, 4]}}
 
 # These lenses address each of the numbers
-def one,   do: [Lenses.value_at_index(0)]
-def two,   do: [Lenses.value_at_index(1), Lenses.key_at_key(2)]
-def three, do: [Lenses.value_at_index(1), Lenses.value_at_key(2), Lenses.value_at_index(0)]
-def four,  do: [Lenses.value_at_index(1), Lenses.value_at_key(2), Lenses.value_at_index(1)]
+def one,   do: [Lenses.at_index(0)]
+def two,   do: [Lenses.at_index(1), Lenses.key_at(2)]
+def three, do: [Lenses.at_index(1), Lenses.at_key(2), Lenses.at_index(0)]
+def four,  do: [Lenses.at_index(1), Lenses.at_key(2), Lenses.at_index(1)]
 
 def numbers, do: [one, two, three, four]
 

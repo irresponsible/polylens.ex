@@ -44,7 +44,11 @@ end
 
 ## Implementation
 
-The lenses are all polymorphic via the `Lens` protocol_ex.
+The lenses are all polymorphic via the `Lens` protocol_ex.  If you're
+familiar with haskell or purescript lenses, these most closely
+represent 'at' lenses because owing to the dynamic nature of elixir,
+they may fail.
+
 
 ## Installation
 

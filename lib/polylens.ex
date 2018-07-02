@@ -1,13 +1,28 @@
 defmodule Polylens do
   @moduledoc """
   Polymorphic Lenses
+  We deviate somewhat from existing lens implementations for statically typed languages
+  to fit in better with elixir where we have to worry about dynamic data
   """
   import ProtocolEx
   import Kernel, except: [get_in: 2, update_in: 3]
 
   defprotocol_ex Lens do
+    # @moduledoc """
+    # These are not classic lenses but 'at' lenses because we do not have a type system
+    # that can guarantee that they cannot fail
+    # """
+    @doc """
+    {:ok, value} | {:error, reason}
+    """
     def get({lens, data})
+    @doc """
+    {:ok, value} | {:error, reason}
+    """
     def set({lens, data}, value)
+    @doc """
+    {:ok, value} | {:error, reason}
+    """
     def update(self, func) do
       with {:ok, val} <- get(self),
         do: set(self, func.(val))

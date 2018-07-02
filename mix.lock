@@ -1,3 +1,3 @@
 %{
-  "protocol_ex": {:hex, :protocol_ex, "0.3.24", "45c116aa788a3bfcbc7aacb1f4e8aef22ffbe33b8ac332efb7508c99cf5b321e", [:mix], [], "hexpm"},
+  "protocol_ex": {:hex, :protocol_ex, "0.4.0", "e9393f7a256f945a9eb557b44ac06c21a50f40064e4acda449da61b458e6ac52", [:mix], [], "hexpm"},
 }

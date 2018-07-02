@@ -22,7 +22,8 @@ defmodule Polylens.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:protocol_ex, "~> 0.3.0"},
+#      {:protocol_ex, git: "https://github.com/OvermindDL1/protocol_ex", branch: "master"},
+      {:protocol_ex, "~> 0.4"},
     ]
   end
 end

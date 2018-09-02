@@ -1,6 +1,8 @@
 # Polylens
 
-Polymorphic Lenses
+An elixirified port of Haskell's lenses using multiple-dispatch polymorphism.
+
+[Hexdocs](https://hexdocs.pm/polylens)
 
 ## Usage
 
@@ -42,19 +44,26 @@ def example do
 end
 ```
 
-## Implementation
-
-The lenses are all polymorphic via the `Lens` protocol_ex.  If you're
-familiar with haskell or purescript lenses, these most closely
-represent 'at' lenses because owing to the dynamic nature of elixir,
-they may fail.
-
-
 ## Installation
 
-Not yet available on hex.
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+by adding `polylens` to your list of dependencies in `mix.exs`:
 
-If you are building your own lenses, you will need to add
+```elixir
+def deps do
+  [
+    # ... other deps ...
+    {:polylens, "~> 0.1.0"},
+  ]
+end
+```
+
+## Implementing your own lenses
+
+We use [protocol_ex](https://github.com/OvermindDL1/protocol_ex) to fake
+multiple dispatch with `{lens, data}` tuples via the `Lens` protocol_ex.
+
+To build your own lenses, you will need to add
 `:protocol_ex` to your Mix project compilers:
 
 ```elixir
@@ -67,20 +76,30 @@ def project do
 end
 ```
 
-<!-- If [available in Hex](https://hex.pm/docs/publish), the package can be installed -->
-<!-- by adding `polylens` to your list of dependencies in `mix.exs`: -->
+You may then implement the `Lens` protocol_ex. Here is how we
+implement `AtKey` for maps:
 
-<!-- ```elixir -->
-<!-- def deps do -->
-<!--   [ -->
-<!--     {:polylens, "~> 0.1.0"} -->
-<!--   ] -->
-<!-- end -->
-<!-- ``` -->
+```elixir
+import ProtocolEx
+alias Polylens.Lens
 
-<!-- Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc) -->
-<!-- and published on [HexDocs](https://hexdocs.pm). Once published, the docs can -->
-<!-- be found at [https://hexdocs.pm/polylens](https://hexdocs.pm/polylens). -->
+defimpl_ex MapAtKey, {%Polylens.AtKey{},map} when is_map(map), for: Lens do
+  def get({%{key: key}, map}) do
+    fail = make_ref()
+    case Map.get(map, key, fail) do
+      ^fail -> {:error, :not_found}
+      ret -> {:ok, ret}
+    end
+  end
+  def set({%{key: key}, map}, value), do: {:ok, Map.put(map, key, value)}
+end
+```
+
+## Note for Haskell/Purescript users
+
+If you're familiar with haskell or purescript lenses, Polylens lenses
+most closely represent 'at' lenses because owing to the dynamic nature
+of Elixir, they may fail.
 
 ## Copyright and License
 

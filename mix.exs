@@ -4,8 +4,16 @@ defmodule Polylens.MixProject do
   def project do
     [
       app: :polylens,
+      description: "An elixirified port of Haskell's lenses using multiple-dispatch polymorphism.",
       version: "0.1.0",
       elixir: "~> 1.4",
+      package: [
+        licenses: ["Apache 2"],
+        links: %{
+          "Repository" => "https://github.com/irresponsible/polylens.ex",
+          "Hexdocs" => "https://hexdocs.pm/polylens",
+        },
+      ],
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env),
@@ -33,7 +41,7 @@ defmodule Polylens.MixProject do
     [
 #      {:protocol_ex, git: "https://github.com/OvermindDL1/protocol_ex", branch: "master"},
       {:protocol_ex, "~> 0.4"},
-      {:dbg, "~> 1.0", only: [:dev, :test]},
+      {:ex_doc, ">= 0.0.0", only: :dev},
       {:dialyxir, "~> 1.0.0-rc.3", only: [:dev], runtime: false},
       {:stream_data, "~> 0.4", only: [:dev, :test]},
     ]

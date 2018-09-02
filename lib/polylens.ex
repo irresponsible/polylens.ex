@@ -1,27 +1,31 @@
 defmodule Polylens do
   @moduledoc """
-  Polymorphic Lenses
-  We deviate somewhat from existing lens implementations for statically typed languages
-  to fit in better with elixir where we have to worry about dynamic data
+  Functions for using Polylenses to manipulate and query data
   """
   import ProtocolEx
   import Kernel, except: [get_in: 2, update_in: 3]
 
   defprotocol_ex Lens do
-    # @moduledoc """
-    # These are not classic lenses but 'at' lenses because we do not have a type system
-    # that can guarantee that they cannot fail
-    # """
+    @moduledoc """
+    The protocol_ex around which Polylens is based.
+    Uses 2-tuples to fake multiple dispatch
+    """
+    # @type lens() :: term()
+    # @spec get({lens(), term()}) :: {:ok, term()} | {:error, term()}
     @doc """
-    {:ok, value} | {:error, reason}
+    Gets an item within the data
     """
     def get({lens, data})
+
+    # @spec set({lens(), term()}, term()) :: {:ok, term()} | {:error, term()}
     @doc """
-    {:ok, value} | {:error, reason}
+    Sets an item within the data
     """
     def set({lens, data}, value)
+
+    # @spec update({lens(), term()}, (term() -> term())) :: {:ok, term()} | {:error, term()}
     @doc """
-    {:ok, value} | {:error, reason}
+    Updates an item within the data with the provided function
     """
     def update(self, func) do
       with {:ok, val} <- get(self),
@@ -33,20 +37,24 @@ defmodule Polylens do
 
   @doc "Gets an item within the data"
   def get(lens, data), do: Lens.get({lens, data})
+
+  @doc "Sets an item within the data"
   def set(lens, data, value), do: Lens.set({lens, data}, value)
+
+  @doc "Updates an item within the data with the provided function"
   def update(lens, data, func), do: Lens.update({lens, data}, func)
 
-  @doc "Like get, but returns untupled and throws if not ok"
+  @doc "Like get, but returns the untupled value or throws"
   def get!(lens, data) do
     {:ok, ret} = get(lens, data)
     ret
   end
-  @doc "Like set, but returns untupled and throws if not ok"
+  @doc "Like set, but returns the untupled value or throws"
   def set!(lens, data, value) do
     {:ok, ret} = set(lens, data, value)
     ret
   end
-  @doc "Like update, but returns untupled and throws if not ok"
+  @doc "Like update, but returns the untupled value or throws"
   def update!(lens, data, value) do
     {:ok, ret} = update(lens, data, value)
     ret
@@ -100,11 +108,13 @@ defmodule Polylens do
     {:ok, ret} = get_in(lenses, data)
     ret
   end
+
   @doc "Like set_in, but returns untupled and throws if not ok"
   def set_in!(lenses, data, value) do
     {:ok, ret} = set_in(lenses, data, value)
     ret
   end
+
   @doc "Like update, but returns untupled and throws if not ok"
   def update_in!(lenses, data, value) do
     {:ok, ret} = update_in(lenses, data, value)

@@ -101,6 +101,11 @@ If you're familiar with haskell or purescript lenses, Polylens lenses
 most closely represent 'at' lenses because owing to the dynamic nature
 of Elixir, they may fail.
 
+## Changelog
+
+* Version 0.1.0 (2018-09-02)
+  Initial release
+
 ## Copyright and License
 
 Copyright 2018 James Laver

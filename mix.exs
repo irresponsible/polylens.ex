@@ -14,6 +14,11 @@ defmodule Polylens.MixProject do
           "Hexdocs" => "https://hexdocs.pm/polylens",
         },
       ],
+      docs: [
+        main: "Polylens",
+	source_url: "https://github.com/irresponsible/polylens.ex",
+        extras: ["README.md"],
+     ],
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env),

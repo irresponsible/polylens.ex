@@ -1,4 +1,5 @@
 defmodule Polylens.AtIndex do
+  @moduledoc false
   @enforce_keys [:index]
   defstruct @enforce_keys
 end
@@ -7,6 +8,7 @@ import ProtocolEx
 alias Polylens.Lens
 
 defimpl_ex ListAtIndex, {%Polylens.AtIndex{},list} when is_list(list), for: Lens do
+  @moduledoc false
   def get({%{index: index}, list}) do
     fail = make_ref()
     case Enum.at(list, index, fail) do
@@ -19,6 +21,7 @@ defimpl_ex ListAtIndex, {%Polylens.AtIndex{},list} when is_list(list), for: Lens
 end
 
 defimpl_ex TupleAtIndex, {%Polylens.AtIndex{},tuple} when is_tuple(tuple), for: Lens do
+  @moduledoc false
   def get({%{index: index}, tuple}) do
     if tuple_size(tuple) > index,
       do: {:ok, elem(tuple, index)},
